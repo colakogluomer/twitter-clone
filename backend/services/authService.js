@@ -9,26 +9,15 @@ const register = async (user) => {
   if (existingUser) throw new ApiError(404, "User already exist!");
 
   const hashedPassword = await bcrypt.hash(user.password, 10);
-  const newUser = null;
-  if (user.email) {
-    newUser = await User.create({
-      name: user.name,
-      username: user.username,
-      password: hashedPassword,
-      email: user.email,
-      birthDate: user.birthDate,
-    });
-  } else {
-    newUser = await User.create({
-      name: user.name,
-      username: user.username,
-      password: hashedPassword,
-      phone: user.phone,
-      birthDate: user.birthDate,
-    });
-  }
 
-  const token = jwt.sign({ _id: newUser._id }, process.env.SECRET_KEY, {
+  const newUser = await User.create({
+    name: user.name,
+    username: user.username,
+    password: hashedPassword,
+    email: user.email,
+    birthDate: user.birthDate,
+  });
+  const token = jwt.sign({ sub: newUser._id }, process.env.SECRET_KEY, {
     expiresIn: "1d",
   });
 
@@ -44,7 +33,7 @@ const login = async (user) => {
   );
   if (!isPasswordCorrect) throw new ApiError(400, "Wrong password!");
 
-  const token = jwt.sign({ _id: existingUser._id }, process.env.SECRET_KEY, {
+  const token = jwt.sign({ sub: existingUser._id }, process.env.SECRET_KEY, {
     expiresIn: "1d",
   });
   const session = {
@@ -55,6 +44,8 @@ const login = async (user) => {
   };
   return session;
 };
+
+const resetPassword = async();
 
 module.exports = {
   register,
