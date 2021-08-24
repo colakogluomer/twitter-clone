@@ -24,7 +24,7 @@ app.get("/", (req, res, next) => {
 // app.use("/home", homeRoute);
 // app.use("/:username", userRoute);
 // app.use("/explore", exploreRoute);
-app.use("/authentication", authRoute);
+app.use("/api/auth", authRoute);
 
 app.use(() => {
   throw new ApiError(404, "Page Not Found.");

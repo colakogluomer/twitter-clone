@@ -1,5 +1,5 @@
 const authService = require("../services/authService");
-const { generateToken } = require("../utils/generateToken");
+const { generateToken } = require("../utils/token");
 const email = require("../utils/email");
 
 const register = async (req, res, next) => {
@@ -16,6 +16,7 @@ const login = async (req, res, next) => {
     const user = await authService.login(req.body);
     res.send(user);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
