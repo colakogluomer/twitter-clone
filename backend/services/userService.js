@@ -37,9 +37,18 @@ const getUserById = async (id) => {
   }
 };
 
+const updateById = async (id, password) => {
+  try {
+    await User.findByIdAndUpdate(id, { password: password });
+  } catch (error) {
+    throw new ApiError(404, error.message);
+  }
+};
+
 module.exports = {
   createUser,
   getUserByEmail,
   getUserById,
   getUserByUsername,
+  updateById,
 };

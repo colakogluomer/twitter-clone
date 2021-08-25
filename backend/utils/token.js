@@ -13,9 +13,7 @@ const generateToken = async (email, type) => {
 
 const verifyToken = async (token) => {
   try {
-    await jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
-      return decoded;
-    });
+    return await jwt.verify(token, process.env.SECRET_KEY);
   } catch (error) {
     throw new ApiError(400, error.message);
   }

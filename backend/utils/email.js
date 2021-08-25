@@ -17,7 +17,7 @@ const sendEmail = async (from, to, subject, text) => {
 const sendResetPasswordEmail = async (to, token) => {
   const from = process.env.EMAIL;
   const subject = "Reset password";
-  const resetPasswordUrl = `http://localhost:5000/reset-password?token=${token}`;
+  const resetPasswordUrl = `http://localhost:5000/api/auth/reset-password?token=${token}`;
   const text = `Dear user, To reset your password, please click on this link: ${resetPasswordUrl}`;
   await sendEmail(from, to, subject, text);
 };

@@ -16,19 +16,19 @@ const login = async (req, res, next) => {
     const user = await authService.login(req.body);
     res.send(user);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
 
 const forgotPassword = async (req, res, next) => {
   try {
-    console.log(req.body.email);
-    const forgotPasswordToken = await generateToken(req.body.email);
+    const forgotPasswordToken = await generateToken(
+      req.body.email,
+      process.env.RESET_PASSWORD_TOKEN
+    );
     await email.sendResetPasswordEmail(req.body.email, forgotPasswordToken);
     res.send("Check your email");
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };

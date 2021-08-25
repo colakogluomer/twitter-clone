@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const ApiError = require("../utils/ApiError");
 const userService = require("../services/userService");
-const { generateToken } = require("../utils/token");
+const { generateToken, verifyToken } = require("../utils/token");
 
 const register = async (user) => {
   const existingUser = await userService.getUserByEmail(user.email);
@@ -40,7 +40,10 @@ const login = async (user) => {
 
   if (!isPasswordCorrect) throw new ApiError(400, "Wrong password!");
 
-  const token = generateToken(existingUser.email, process.env.LOGIN_TOKEN);
+  const token = await generateToken(
+    existingUser.email,
+    process.env.LOGIN_TOKEN
+  );
 
   const session = {
     name: existingUser.name,
@@ -51,7 +54,15 @@ const login = async (user) => {
   return session;
 };
 
+const resetPassword = async (token, newPassword) => {
+  const decodedToken = await verifyToken(token);
+  const user = await userService.getUserByEmail(decodedToken.sub);
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+  await userService.updateById(user._id, hashedPassword);
+  return "ok";
+};
 module.exports = {
   register,
   login,
+  resetPassword,
 };

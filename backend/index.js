@@ -21,9 +21,9 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.get("/", (req, res, next) => {
   res.send("Hello there");
 });
-// app.use("/home", homeRoute);
-// app.use("/:username", userRoute);
-// app.use("/explore", exploreRoute);
+// app.use("/api/home", homeRoute);
+// app.use("/api/:username", userRoute);
+// app.use("/api/explore", exploreRoute);
 app.use("/api/auth", authRoute);
 
 app.use(() => {
