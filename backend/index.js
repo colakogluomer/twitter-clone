@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const ApiError = require("./utils/ApiError");
 const errorHandling = require("./middlewares/errorHandling");
 const authRoute = require("./routes/authRoute");
+const tweetRoute = require("./routes/tweetRoute");
 require("./models/User");
 require("./models/Tweet");
 require("./models/Tag");
@@ -24,6 +25,7 @@ app.get("/", (req, res, next) => {
 // app.use("/api/home", homeRoute);
 // app.use("/api/:username", userRoute);
 // app.use("/api/explore", exploreRoute);
+app.use("/api/tweet", tweetRoute);
 app.use("/api/auth", authRoute);
 
 app.use(() => {

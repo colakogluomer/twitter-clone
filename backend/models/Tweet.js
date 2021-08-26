@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
 
 const TweetSchema = new mongoose.Schema({
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    autopopulate: true,
+    required: false,
+  },
   tag: {
     type: String,
     required: false,

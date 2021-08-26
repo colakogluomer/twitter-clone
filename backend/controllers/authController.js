@@ -1,5 +1,5 @@
 const authService = require("../services/authService");
-const { generateToken } = require("../utils/token");
+const token = require("../utils/token");
 const email = require("../utils/email");
 
 const register = async (req, res, next) => {
@@ -22,7 +22,7 @@ const login = async (req, res, next) => {
 
 const forgotPassword = async (req, res, next) => {
   try {
-    const forgotPasswordToken = await generateToken(
+    const forgotPasswordToken = await token.generateToken(
       req.body.email,
       process.env.RESET_PASSWORD_TOKEN
     );
