@@ -10,18 +10,27 @@ const createUser = async (user) => {
   }
 };
 
+const getAllUsers = async () => {
+  try {
+    const users = await User.find();
+    return users;
+  } catch (error) {
+    throw new ApiError(404, error.message);
+  }
+};
+
 const getUserByEmail = async (email) => {
   try {
     const user = await User.findOne({ email: email });
     return user;
   } catch (error) {
-    throw new ApiError(404, error);
+    throw new ApiError(404, error.message);
   }
 };
 
 const getUserByUsername = async (username) => {
   try {
-    const user = await User.findOne({ username: username });
+    const user = await User.findOne({ username: username }, { password: 0 });
     return user;
   } catch (error) {
     throw new ApiError(404, error.message);
@@ -51,4 +60,5 @@ module.exports = {
   getUserById,
   getUserByUsername,
   updateById,
+  getAllUsers,
 };

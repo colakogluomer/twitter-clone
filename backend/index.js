@@ -6,6 +6,7 @@ const ApiError = require("./utils/ApiError");
 const errorHandling = require("./middlewares/errorHandling");
 const authRoute = require("./routes/authRoute");
 const tweetRoute = require("./routes/tweetRoute");
+const userRoute = require("./routes/userRoute");
 require("./models/User");
 require("./models/Tweet");
 require("./models/Tag");
@@ -23,7 +24,7 @@ app.get("/", (req, res, next) => {
   res.send("Hello there");
 });
 // app.use("/api/home", homeRoute);
-// app.use("/api/:username", userRoute);
+app.use("/api/user", userRoute);
 // app.use("/api/explore", exploreRoute);
 app.use("/api/tweet", tweetRoute);
 app.use("/api/auth", authRoute);
